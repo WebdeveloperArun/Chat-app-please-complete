@@ -1,5 +1,5 @@
-import React from 'react'
-import {Link} from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -33,9 +33,12 @@ const Login = () => {
                 className="w-full input input-bordered h-10"
               />
             </div>
-            <div className="text-sm  hover:underline hover:text-blue-600 mt-2 inline-block">
+            <Link
+              to={"/signup"}
+              className="text-sm  hover:underline hover:text-blue-600 mt-2 inline-block"
+            >
               {"Don't"} have an account?
-            </div>
+            </Link>
 
             <div>
               <button className="btn btn-block btn-md mt-2 bg-blue-500 text-xl text-white">
@@ -47,6 +50,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Login
+export default Login;
