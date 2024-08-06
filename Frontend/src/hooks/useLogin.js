@@ -1,38 +1,31 @@
+
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 
-const useSignup = () => {
+const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
 
-  const signup = async ({
-    fullName,
+  const login = async ({
     username,
-    password,
-    confirmPassword,
-    gender,
+    password
   }) => {
     const success = handleInputErrors({
-      fullName,
       username,
-      password,
-      confirmPassword,
-      gender,
+      password
     });
     if (!success) return;
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fullName,
           username,
-          password,
-          confirmPassword,
-          gender,
+          password
         }),
       });
 
@@ -54,25 +47,17 @@ const useSignup = () => {
     }
   };
 
-  return { loading, signup };
+  return { loading, login };
 };
 
-export default useSignup;
+export default useLogin;
 
 const handleInputErrors = ({
-  fullName,
   username,
-  password,
-  confirmPassword,
-  gender,
+  password
 }) => {
-  if (!fullName || !username || !password || !confirmPassword || !gender) {
+  if (!username || !password) {
     toast.error("Please fill all the fields");
-    return false;
-  }
-
-  if (password !== confirmPassword) {
-    toast.error("Passwords do not match");
     return false;
   }
 

@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: ""
+  });
+
+  const {loading, login} = useLogin()
+
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  await login(loginData)
+ }
+
   return (
-    <div>
+    <div onSubmit={handleLogin}>
       <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
         <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
           <h1 className="text-3xl font-semibold text-center text-gray-300">
@@ -20,6 +33,10 @@ const Login = () => {
                 type="text"
                 placeholder="Enter username"
                 className="w-full input input-bordered h-10"
+                value={loginData.username}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, username: e.target.value })
+                }
               />
             </div>
 
@@ -31,6 +48,10 @@ const Login = () => {
                 type="password"
                 placeholder="Enter Password"
                 className="w-full input input-bordered h-10"
+                value={loginData.password}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, password: e.target.value })
+                }
               />
             </div>
             <Link
@@ -41,8 +62,16 @@ const Login = () => {
             </Link>
 
             <div>
-              <button className="btn btn-block btn-md mt-2 bg-blue-500 text-xl text-white">
-                Login
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn btn-block btn-md mt-2 bg-blue-500 text-xl text-white"
+              >
+                {loading ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  "Login"
+                )}
               </button>
             </div>
           </form>
